@@ -1,0 +1,13 @@
+<h1>Welcome!</h1>
+
+<form action="/login" method="post">
+    <label for="login-user">Username or email:
+        <input type="text" name="userData" id="login-user" placeholder="user@user.com">
+    </label>
+    <label for="login-pw">Password:
+        <input type="password" name="password" id="login-pw" placeholder="********">
+    </label>
+    <button type="submit">Log-in</button>
+</form>
+
+<h2>{{errorMessage}}</h2>
