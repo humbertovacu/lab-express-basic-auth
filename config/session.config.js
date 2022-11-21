@@ -1,3 +1,4 @@
+const MongoStore = require('connect-mongo');
 const session = require('express-session');
 
 module.exports = app => {
@@ -11,8 +12,11 @@ module.exports = app => {
                 sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
                 secure: process.env.NODE_ENV === 'production',
                 httpOnly: true,
-                maxAge: 60000
-            }
+            },
+            store: MongoStore.create({
+                mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/lab-express-basic-auth",
+                ttl: 60 * 60 * 48
+            })
         })
-    )
-}
+    );
+};

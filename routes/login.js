@@ -4,7 +4,9 @@ const router = require('express').Router();
 
 const bcrypt = require('bcryptjs');
 
-router.get('/', (req, res)=> {
+const { loggedIn, loggedOut } = require('../middleware/route-guard.js');
+
+router.get('/', loggedOut, (req, res)=> {
     res.render('login')
 })
 
@@ -37,6 +39,21 @@ router.post('/', async (req, res) => {
 
 router.get('/user', (req, res) => {
     res.render('user', { userInSession: req.session.currentUser});
+})
+
+router.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {res.send(err)}
+        else res.redirect('/')
+    })
+})
+
+router.get('/main', loggedIn, (req, res)=> {
+ res.render('main', {successMessage: 'You are logged in! Enjoy this cat'})
+})
+
+router.get('/private', loggedIn, (req, res)=> {
+    res.render('private', {successMessage: 'You are logged in! Enjoy the best meme in the world'})
 })
 
 

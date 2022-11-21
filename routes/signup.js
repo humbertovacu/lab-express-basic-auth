@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User.model');
 const saltSteps = 12;
 
+const { loggedIn, loggedOut } = require('../middleware/route-guard.js');
+
 router.get('/', (req, res) => {
    res.render('signup')
 })
